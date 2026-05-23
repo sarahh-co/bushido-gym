@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bushido Gym — L'élite du fitness. Pays de Gex.</title>
+  <meta name="description" content="Bushido Gym, 650m² de performance à Chevry, Pays de Gex. À 5 minutes de la Suisse. Musculation, Hyrox, Cardio, Coaching Privé. Rejoins la liste d'attente." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black:   #0A0A0A;
+      --offwhite: #F5F0E8;
+      --red:     #C8102E;
+      --red-dim: rgba(200, 16, 46, 0.12);
+      --red-glow: rgba(200, 16, 46, 0.25);
+      --grey-dark: #111111;
+      --grey-mid:  #1A1A1A;
+      --grey-line: rgba(245, 240, 232, 0.08);
+      --font-title: 'Bebas Neue', sans-serif;
+      --font-body:  'Inter', sans-serif;
+      --max-w: 1200px;
+      --section-pad: 120px 24px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--offwhite);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger children */
+    .stagger > * { transition-delay: calc(var(--i, 0) * 80ms); }
+
+    /* Thin horizontal rule styled as Japanese ma (negative space) */
+    .rule {
+      width: 48px;
+      height: 1px;
+      background: var(--red);
+      margin: 24px 0;
+    }
+
+    .rule--center { margin: 24px auto; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s ease, padding 0.3s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 32px;
+      border-bottom: 1px solid var(--grey-line);
+    }
+
+    .nav-logo {
+      font-family: var(--font-title);
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: var(--offwhite);
+    }
+
+    .nav-logo span { color: var(--red); }
+
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--offwhite);
+      border: 1px solid rgba(245, 240, 232, 0.3);
+      padding: 10px 22px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 140px 24px 100px;
+    }
+
+    /* Diagonal red overlay */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        var(--red-dim) 0%,
+        transparent 55%
+      );
+      pointer-events: none;
+    }
+
+    /* Subtle geometric grid pattern */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grey-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grey-line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Decorative kanji — 武士道 (Bushido) */
+    .hero-kanji {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(140px, 18vw, 260px);
+      font-weight: 900;
+      color: rgba(245, 240, 232, 0.03);
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.02em;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      margin-bottom: 36px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      animation: pulse-dot 2s ease infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-family: var(--font-title);
+      font-size: clamp(52px, 9vw, 124px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--offwhite);
+      margin-bottom: 28px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 2.2vw, 22px);
+      font-weight: 300;
+      color: rgba(245, 240, 232, 0.65);
+      max-width: 520px;
+      margin-bottom: 52px;
+      line-height: 1.5;
+    }
+
+    /* Waitlist form */
+    .waitlist-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+    }
+
+    .waitlist-form input[type="email"] {
+      flex: 1;
+      background: rgba(245, 240, 232, 0.06);
+      border: 1px solid rgba(245, 240, 232, 0.15);
+      border-right: none;
+      color: var(--offwhite);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 16px 20px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .waitlist-form input[type="email"]::placeholder {
+      color: rgba(245, 240, 232, 0.35);
+    }
+
+    .waitlist-form input[type="email"]:focus {
+      border-color: var(--red);
+    }
+
+    .waitlist-form button {
+      background: var(--red);
+      border: 1px solid var(--red);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 16px 28px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .waitlist-form button:hover { background: #a50d25; }
+
+    .form-note {
+      font-size: 11px;
+      color: rgba(245, 240, 232, 0.3);
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--grey-line);
+      flex-wrap: wrap;
+    }
+
+    .stat-item {}
+
+    .stat-value {
+      font-family: var(--font-title);
+      font-size: 52px;
+      line-height: 1;
+      color: var(--offwhite);
+      letter-spacing: 0.02em;
+    }
+
+    .stat-value span { color: var(--red); }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.4);
+      margin-top: 6px;
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    #about {
+      padding: var(--section-pad);
+      background: var(--black);
+      position: relative;
+    }
+
+    /* Vertical Japanese text decoration */
+    #about::before {
+      content: '武士道';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      color: rgba(245, 240, 232, 0.06);
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      font-weight: 500;
+      padding: 0 12px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      font-family: var(--font-title);
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 32px;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      color: rgba(245, 240, 232, 0.65);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .pillar {
+      background: var(--grey-mid);
+      padding: 32px 28px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .pillar:hover { border-color: var(--red); }
+
+    .pillar-value {
+      font-family: var(--font-title);
+      font-size: 48px;
+      color: var(--offwhite);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .pillar-value span { color: var(--red); }
+
+    .pillar-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.4);
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       SPACES
+    ============================================================ */
+    #spaces {
+      padding: var(--section-pad);
+      background: var(--grey-dark);
+      position: relative;
+    }
+
+    .spaces-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .spaces-header h2 {
+      font-family: var(--font-title);
+      font-size: clamp(40px, 5.5vw, 80px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .spaces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    /* Last row: 2 cards spanning differently for visual balance */
+    .space-card {
+      background: var(--black);
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.3s;
+    }
+
+    .space-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .space-card:hover::after { transform: scaleX(1); }
+    .space-card:hover { background: #0f0f0f; }
+
+    .space-icon {
+      font-size: 32px;
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+
+    .space-name {
+      font-family: var(--font-title);
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+      color: var(--offwhite);
+    }
+
+    .space-desc {
+      font-size: 14px;
+      color: rgba(245, 240, 232, 0.5);
+      line-height: 1.7;
+    }
+
+    .space-tag {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red);
+      padding: 5px 12px;
+    }
+
+    /* Wide card — bar & accueil takes full row on its own or 1.5 cols */
+    .space-card--wide {
+      grid-column: span 2;
+    }
+
+    /* ============================================================
+       HORAIRES
+    ============================================================ */
+    #horaires {
+      padding: var(--section-pad);
+      background: var(--black);
+      text-align: center;
+    }
+
+    #horaires h2 {
+      font-family: var(--font-title);
+      font-size: clamp(40px, 5.5vw, 80px);
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    #horaires .lead {
+      font-size: 16px;
+      color: rgba(245, 240, 232, 0.45);
+      margin-bottom: 72px;
+      letter-spacing: 0.05em;
+    }
+
+    .hours-display {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .hours-block {
+      padding: 60px 72px;
+      border: 1px solid var(--grey-line);
+    }
+
+    .hours-block:first-child { border-right: none; }
+
+    .hours-day {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.35);
+      margin-bottom: 16px;
+    }
+
+    .hours-time {
+      font-family: var(--font-title);
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .hours-time span { color: var(--red); }
+
+    .hours-sep {
+      font-family: var(--font-title);
+      font-size: 80px;
+      color: rgba(245, 240, 232, 0.06);
+      padding: 0 32px;
+      align-self: center;
+    }
+
+    .hours-note {
+      margin-top: 48px;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.3);
+    }
+
+    /* ============================================================
+       LOCALISATION
+    ============================================================ */
+    #localisation {
+      padding: var(--section-pad);
+      background: var(--grey-dark);
+    }
+
+    .loc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .loc-info h2 {
+      font-family: var(--font-title);
+      font-size: clamp(40px, 5vw, 72px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 36px;
+    }
+
+    .loc-detail {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .loc-detail-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .loc-detail-text h4 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--offwhite);
+      margin-bottom: 4px;
+    }
+
+    .loc-detail-text p {
+      font-size: 14px;
+      color: rgba(245, 240, 232, 0.5);
+      line-height: 1.5;
+    }
+
+    .loc-map {
+      position: relative;
+      background: var(--black);
+      border: 1px solid var(--grey-line);
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Decorative map placeholder */
+    .loc-map::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          var(--grey-line) 39px,
+          var(--grey-line) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          var(--grey-line) 39px,
+          var(--grey-line) 40px
+        );
+    }
+
+    .map-pin {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .map-pin-dot {
+      width: 16px;
+      height: 16px;
+      background: var(--red);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      box-shadow: 0 0 0 6px var(--red-dim), 0 0 0 12px rgba(200,16,46,0.05);
+      animation: ping 2.5s ease infinite;
+    }
+
+    @keyframes ping {
+      0%, 100% { box-shadow: 0 0 0 6px var(--red-dim), 0 0 0 12px rgba(200,16,46,0.05); }
+      50%       { box-shadow: 0 0 0 10px var(--red-dim), 0 0 0 20px rgba(200,16,46,0.03); }
+    }
+
+    .map-pin p {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.5);
+    }
+
+    .map-link {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .map-link:hover { opacity: 0.7; }
+
+    /* ============================================================
+       CTA — LISTE D'ATTENTE
+    ============================================================ */
+    #cta {
+      padding: 160px 24px;
+      background: var(--black);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Full-bleed red glow behind CTA */
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    #cta h2 {
+      position: relative;
+      font-family: var(--font-title);
+      font-size: clamp(48px, 8vw, 112px);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+
+    #cta .cta-sub {
+      position: relative;
+      font-size: 17px;
+      color: rgba(245, 240, 232, 0.5);
+      max-width: 440px;
+      margin: 0 auto 52px;
+      line-height: 1.6;
+    }
+
+    .cta-form {
+      position: relative;
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .cta-form input[type="email"] {
+      flex: 1;
+      background: rgba(245, 240, 232, 0.06);
+      border: 1px solid rgba(245, 240, 232, 0.15);
+      border-right: none;
+      color: var(--offwhite);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 18px 22px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .cta-form input[type="email"]::placeholder {
+      color: rgba(245, 240, 232, 0.3);
+    }
+
+    .cta-form input[type="email"]:focus { border-color: var(--red); }
+
+    .cta-form button {
+      background: var(--red);
+      border: 1px solid var(--red);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 18px 32px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .cta-form button:hover { background: #a50d25; }
+
+    .cta-note {
+      font-size: 11px;
+      color: rgba(245, 240, 232, 0.25);
+      margin-top: 16px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       SUCCESS TOAST
+    ============================================================ */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: var(--grey-mid);
+      border-left: 3px solid var(--red);
+      color: var(--offwhite);
+      padding: 18px 24px;
+      font-size: 14px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      max-width: 320px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .toast strong { display: block; font-weight: 600; margin-bottom: 4px; }
+    .toast span { color: rgba(245, 240, 232, 0.55); font-size: 13px; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--grey-dark);
+      border-top: 1px solid var(--grey-line);
+      padding: 60px 24px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-title);
+      font-size: 28px;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    .footer-meta {
+      font-size: 12px;
+      color: rgba(245, 240, 232, 0.3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(245, 240, 232, 0.12);
+      color: rgba(245, 240, 232, 0.45);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .footer-legal {
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(245, 240, 232, 0.15);
+      letter-spacing: 0.08em;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--grey-line);
+    }
+
+    /* ============================================================
+       RESPONSIVE — TABLET
+    ============================================================ */
+    @media (max-width: 900px) {
+      :root { --section-pad: 80px 24px; }
+
+      .about-grid,
+      .loc-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-pillars { grid-template-columns: 1fr 1fr; }
+
+      .spaces-grid { grid-template-columns: 1fr 1fr; }
+
+      .space-card--wide { grid-column: span 2; }
+
+      .hours-block { padding: 40px 48px; }
+
+      .hero-kanji { display: none; }
+
+      .hero-stats { gap: 32px; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE
+    ============================================================ */
+    @media (max-width: 600px) {
+      :root { --section-pad: 64px 20px; }
+
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+
+      .nav-cta { display: none; }
+
+      .hero-title { font-size: clamp(44px, 13vw, 72px); }
+
+      .waitlist-form {
+        flex-direction: column;
+      }
+
+      .waitlist-form input[type="email"] {
+        border-right: 1px solid rgba(245, 240, 232, 0.15);
+        border-bottom: none;
+      }
+
+      .spaces-grid { grid-template-columns: 1fr; }
+      .space-card--wide { grid-column: span 1; }
+
+      .about-pillars { grid-template-columns: 1fr; gap: 2px; }
+
+      .hours-display { flex-direction: column; gap: 2px; }
+      .hours-block { padding: 36px 40px; width: 100%; }
+      .hours-block:first-child { border-right: 1px solid var(--grey-line); border-bottom: none; }
+      .hours-sep { display: none; }
+
+      .cta-form { flex-direction: column; }
+      .cta-form input[type="email"] {
+        border-right: 1px solid rgba(245, 240, 232, 0.15);
+        border-bottom: none;
+      }
+
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+
+      .hero-stats { gap: 24px; }
+      .stat-value { font-size: 40px; }
+
+      .toast { right: 16px; left: 16px; bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-logo">BUSHIDO<span>.</span></div>
+    <a href="#cta" class="nav-cta">Rejoindre la liste</a>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-kanji" aria-hidden="true">武士道</div>
+
+    <div class="hero-inner">
+      <div class="hero-badge fade-in">La plus grande salle du Pays de Gex</div>
+
+      <h1 class="hero-title fade-in">
+        L'élite<br />
+        du <em>fitness.</em><br />
+        À deux pas<br />
+        de la Suisse.
+      </h1>
+
+      <p class="hero-subtitle fade-in">
+        650m² dédiés à ta performance.<br />
+        Bientôt à Chevry.
+      </p>
+
+      <!-- Brevo waitlist form — action à compléter -->
+      <form
+        class="waitlist-form fade-in"
+        id="hero-form"
+        action="BREVO_FORM_ACTION_URL"
+        method="POST"
+        onsubmit="handleFormSubmit(event, this)"
+      >
+        <input
+          type="email"
+          name="EMAIL"
+          placeholder="ton@email.com"
+          required
+          autocomplete="email"
+          aria-label="Adresse email"
+        />
+        <button type="submit">Rejoindre la liste</button>
+      </form>
+      <p class="form-note fade-in">Aucun spam. Uniquement les infos essentielles.</p>
+
+      <div class="hero-stats stagger fade-in">
+        <div class="stat-item" style="--i:0">
+          <div class="stat-value">650<span>m²</span></div>
+          <div class="stat-label">Surface totale</div>
+        </div>
+        <div class="stat-item" style="--i:1">
+          <div class="stat-value">5<span>min</span></div>
+          <div class="stat-label">De la Suisse</div>
+        </div>
+        <div class="stat-item" style="--i:2">
+          <div class="stat-value">50<span>+</span></div>
+          <div class="stat-label">Places parking</div>
+        </div>
+        <div class="stat-item" style="--i:3">
+          <div class="stat-value">7<span>j/7</span></div>
+          <div class="stat-label">Ouverture</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       À PROPOS
+  ============================================================ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-text fade-in">
+          <span class="section-label">À propos</span>
+          <h2>Pensé pour ceux qui prennent ça au sérieux.</h2>
+          <div class="rule"></div>
+          <p>
+            Bushido Gym, c'est l'aboutissement d'années de travail et de passion.
+            Une salle de 650m² conçue dans les moindres détails pour ceux qui
+            prennent leur entraînement au sérieux.
+          </p>
+          <p>
+            Pas de compromis sur l'équipement. Pas de compromis sur l'espace.
+            Un environnement pensé pour performer — que tu sois là pour la musculation,
+            le cross-training, ou un suivi coaching entièrement personnalisé.
+          </p>
+          <p>
+            Bienvenue au Pays de Gex. À deux pas de la Suisse.
+            Et bien au-delà de ce que tu trouveras ailleurs dans la région.
+          </p>
+        </div>
+
+        <div class="about-pillars fade-in">
+          <div class="pillar">
+            <div class="pillar-value">650<span>m²</span></div>
+            <div class="pillar-label">Surface totale</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-value"><span>#</span>1</div>
+            <div class="pillar-label">Du Pays de Gex</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-value">5<span>min</span></div>
+            <div class="pillar-label">De Genève</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-value">50<span>+</span></div>
+            <div class="pillar-label">Places parking</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ESPACES
+  ============================================================ -->
+  <section id="spaces">
+    <div class="container">
+
+      <div class="spaces-header fade-in">
+        <span class="section-label">Nos espaces</span>
+        <h2>Chaque mètre carré compte.</h2>
+        <div class="rule rule--center"></div>
+      </div>
+
+      <div class="spaces-grid">
+
+        <div class="space-card fade-in">
+          <div class="space-icon">🏋️</div>
+          <div class="space-name">Musculation Libre</div>
+          <p class="space-desc">
+            Machines Panatta haut de gamme, racks, haltères de 3 à 50 kg,
+            smith machine, poulies centrales. Tout ce qu'il te faut pour
+            progresser sans limite.
+          </p>
+          <div class="space-tag">Panatta Premium</div>
+        </div>
+
+        <div class="space-card fade-in">
+          <div class="space-icon">🔥</div>
+          <div class="space-name">Hyrox & Cross Training</div>
+          <p class="space-desc">
+            Salle affiliée Hyrox officielle, cage de cross training, SkiErg,
+            rameurs, tapis. Accès prioritaire aux compétitions Hyrox
+            en France et en Europe.
+          </p>
+          <div class="space-tag">Affilié Hyrox</div>
+        </div>
+
+        <div class="space-card fade-in">
+          <div class="space-icon">💨</div>
+          <div class="space-name">Cardio</div>
+          <p class="space-desc">
+            Équipements Technogym dernière génération : Stairmaster,
+            Skillmill, tapis de course, rameurs. Performance et récupération
+            au même niveau.
+          </p>
+          <div class="space-tag">Technogym</div>
+        </div>
+
+        <div class="space-card fade-in">
+          <div class="space-icon">🥊</div>
+          <div class="space-name">Coaching Privé</div>
+          <p class="space-desc">
+            Salle entièrement dédiée de 70m², le concept fondateur de
+            Bushido Gym. Un espace pensé pour l'intensité d'un suivi
+            100% personnalisé, loin du regard des autres.
+          </p>
+          <div class="space-tag">70m² dédiés</div>
+        </div>
+
+        <div class="space-card space-card--wide fade-in">
+          <div class="space-icon">🥤</div>
+          <div class="space-name">Bar à Shaker & Accueil</div>
+          <p class="space-desc">
+            Smoothies et boissons protéinées maison, salon détente, bibliothèque fitness,
+            espace inscription et goodies Bushido. Parce que l'expérience commence
+            dès que tu franchis la porte.
+          </p>
+          <div class="space-tag">Fait maison</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HORAIRES
+  ============================================================ -->
+  <section id="horaires">
+    <div class="container">
+      <span class="section-label fade-in">Horaires</span>
+      <h2 class="fade-in">Toujours ouvert.</h2>
+      <p class="lead fade-in">7 jours sur 7, sans exception.</p>
+
+      <div class="hours-display fade-in">
+        <div class="hours-block">
+          <div class="hours-day">Ouverture</div>
+          <div class="hours-time"><span>06</span>h00</div>
+        </div>
+
+        <div class="hours-sep" aria-hidden="true">—</div>
+
+        <div class="hours-block">
+          <div class="hours-day">Fermeture</div>
+          <div class="hours-time">23<span>h00</span></div>
+        </div>
+      </div>
+
+      <p class="hours-note fade-in">Lundi au Dimanche &nbsp;·&nbsp; Jours fériés inclus</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LOCALISATION
+  ============================================================ -->
+  <section id="localisation">
+    <div class="container">
+      <div class="loc-grid">
+
+        <div class="loc-info fade-in">
+          <span class="section-label">Nous trouver</span>
+          <h2>Chevry,<br />Pays de Gex.</h2>
+          <div class="rule"></div>
+
+          <div class="loc-detail">
+            <div class="loc-detail-icon">📍</div>
+            <div class="loc-detail-text">
+              <h4>Adresse</h4>
+              <p>Chevry, Pays de Gex<br />01170 — France</p>
+            </div>
+          </div>
+
+          <div class="loc-detail">
+            <div class="loc-detail-icon">🇨🇭</div>
+            <div class="loc-detail-text">
+              <h4>À 5 minutes de la Suisse</h4>
+              <p>Accès facile depuis Genève, Nyon, Gex et Ferney-Voltaire.</p>
+            </div>
+          </div>
+
+          <div class="loc-detail">
+            <div class="loc-detail-icon">🅿️</div>
+            <div class="loc-detail-text">
+              <h4>Parking gratuit</h4>
+              <p>50 places disponibles directement sur place. Gratuit pour tous nos membres.</p>
+            </div>
+          </div>
+
+          <!-- Placeholder Google Maps — remplacer l'href par le lien réel -->
+          <a
+            href="https://maps.google.com/?q=Chevry,Pays+de+Gex"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="map-link"
+          >
+            Ouvrir dans Google Maps →
+          </a>
+        </div>
+
+        <div class="fade-in">
+          <div class="loc-map" role="img" aria-label="Carte — Bushido Gym, Chevry">
+            <div class="map-pin">
+              <div class="map-pin-dot"></div>
+              <p>Bushido Gym — Chevry</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA FINAL — LISTE D'ATTENTE
+  ============================================================ -->
+  <section id="cta">
+    <span class="section-label fade-in">Liste d'attente</span>
+    <h2 class="fade-in">Sois parmi<br />les premiers.</h2>
+    <p class="cta-sub fade-in">
+      Inscris-toi maintenant et reçois toutes les infos en avant-première :
+      tarifs, date d'ouverture, offres fondateurs.
+    </p>
+
+    <!-- Brevo waitlist form — action à compléter -->
+    <form
+      class="cta-form fade-in"
+      id="cta-form"
+      action="BREVO_FORM_ACTION_URL"
+      method="POST"
+      onsubmit="handleFormSubmit(event, this)"
+    >
+      <input
+        type="email"
+        name="EMAIL"
+        placeholder="ton@email.com"
+        required
+        autocomplete="email"
+        aria-label="Adresse email"
+      />
+      <button type="submit">Rejoindre la liste</button>
+    </form>
+    <p class="cta-note fade-in">Aucun spam. Désabonnement en un clic.</p>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">BUSHIDO<span>.</span></div>
+        <div class="footer-meta">Bientôt à Chevry, Pays de Gex</div>
+      </div>
+
+      <div class="footer-socials">
+        <!-- Instagram -->
+        <a
+          href="https://instagram.com/bushidogym"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+          aria-label="Instagram Bushido Gym"
+          title="Instagram"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+
+        <!-- TikTok -->
+        <a
+          href="https://tiktok.com/@bushidogym"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+          aria-label="TikTok Bushido Gym"
+          title="TikTok"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.17 8.17 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="footer-legal">
+        © 2026 Bushido Gym — Tous droits réservés &nbsp;·&nbsp;
+        Chevry, Pays de Gex, France
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <strong>Tu es sur la liste ✓</strong>
+    <span>On te tient au courant dès l'ouverture.</span>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // --- Navbar scroll effect ---
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // --- Intersection Observer — fade in animations ---
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // Hero elements visible immediately (above the fold)
+    document.querySelectorAll('#hero .fade-in').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 120);
+    });
+
+    // --- Waitlist form handling ---
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4500);
+    }
+
+    function handleFormSubmit(event, form) {
+      event.preventDefault();
+
+      const email = form.querySelector('input[type="email"]').value.trim();
+      if (!email) return;
+
+      // Si l'action Brevo est configurée, soumettre réellement
+      const action = form.getAttribute('action');
+      if (action && action !== 'BREVO_FORM_ACTION_URL') {
+        // Vrai envoi via fetch vers Brevo
+        const data = new FormData(form);
+        fetch(action, { method: 'POST', body: data, mode: 'no-cors' })
+          .catch(() => {});
+      }
+
+      // Feedback UX immédiat
+      form.querySelector('input[type="email"]').value = '';
+      showToast();
+    }
+  </script>
+
+</body>
+</html>
