@@ -1,0 +1,7 @@
+[build]
+  functions = "netlify/functions"
+
+[env]
+  [env.production]
+    # Set BREVO_API_KEY environment variable in Netlify dashboard
+    # Settings > Environment > Environment variables

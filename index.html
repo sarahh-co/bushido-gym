@@ -1408,10 +1408,8 @@
       setTimeout(() => el.classList.add('visible'), i * 120);
     });
 
-    // --- Waitlist form handling — Brevo API integration ---
-    const BREVO_API_KEY = 'REMOVED';
-    const BREVO_LIST_ID = 5;
-    const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
+    // --- Waitlist form handling — Netlify serverless function ---
+    const SUBSCRIBE_FUNCTION_URL = '/.netlify/functions/subscribe';
 
     function showToast(message, type = 'success') {
       const toast = document.getElementById('toast');
@@ -1444,28 +1442,24 @@
       }
 
       try {
-        const response = await fetch(BREVO_API_URL, {
+        const response = await fetch(SUBSCRIBE_FUNCTION_URL, {
           method: 'POST',
           headers: {
-            "api-key": "REMOVED",
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            email: email,
-            listIds: [BREVO_LIST_ID],
-            updateEnabled: true
+            email: email
           })
         });
 
-        if (response.ok || response.status === 400) {
-          // 200: created, 400: already exists (which is fine)
+        if (response.ok) {
           emailInput.value = '';
           showToast('', 'success');
         } else {
           showToast('Erreur lors de l\'inscription. Réessaye.', 'error');
         }
       } catch (error) {
-        console.error('Brevo API error:', error);
+        console.error('Subscribe function error:', error);
         showToast('Erreur de connexion. Réessaye plus tard.', 'error');
       }
     }
