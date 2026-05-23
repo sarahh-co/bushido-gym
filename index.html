@@ -1043,12 +1043,10 @@
         Bientôt à Chevry.
       </p>
 
-      <!-- Brevo waitlist form — action à compléter -->
+      <!-- Brevo waitlist form -->
       <form
         class="waitlist-form fade-in"
         id="hero-form"
-        action="BREVO_FORM_ACTION_URL"
-        method="POST"
         onsubmit="handleFormSubmit(event, this)"
       >
         <input
@@ -1305,12 +1303,10 @@
       tarifs, date d'ouverture, offres fondateurs.
     </p>
 
-    <!-- Brevo waitlist form — action à compléter -->
+    <!-- Brevo waitlist form -->
     <form
       class="cta-form fade-in"
       id="cta-form"
-      action="BREVO_FORM_ACTION_URL"
-      method="POST"
       onsubmit="handleFormSubmit(event, this)"
     >
       <input
@@ -1412,31 +1408,66 @@
       setTimeout(() => el.classList.add('visible'), i * 120);
     });
 
-    // --- Waitlist form handling ---
-    function showToast() {
+    // --- Waitlist form handling — Brevo API integration ---
+    const BREVO_API_KEY = 'REMOVED';
+    const BREVO_LIST_ID = 5;
+    const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
+
+    function showToast(message, type = 'success') {
       const toast = document.getElementById('toast');
+      const strong = toast.querySelector('strong');
+      const span = toast.querySelector('span');
+
+      if (type === 'success') {
+        strong.textContent = 'Tu es sur la liste ✓';
+        span.textContent = 'On te tient au courant dès l\'ouverture.';
+        toast.style.borderLeftColor = 'var(--red)';
+      } else if (type === 'error') {
+        strong.textContent = 'Erreur ✗';
+        span.textContent = message || 'Une erreur est survenue. Réessaye plus tard.';
+        toast.style.borderLeftColor = '#ff6b6b';
+      }
+
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 4500);
     }
 
-    function handleFormSubmit(event, form) {
+    async function handleFormSubmit(event, form) {
       event.preventDefault();
 
-      const email = form.querySelector('input[type="email"]').value.trim();
-      if (!email) return;
+      const emailInput = form.querySelector('input[type="email"]');
+      const email = emailInput.value.trim();
 
-      // Si l'action Brevo est configurée, soumettre réellement
-      const action = form.getAttribute('action');
-      if (action && action !== 'BREVO_FORM_ACTION_URL') {
-        // Vrai envoi via fetch vers Brevo
-        const data = new FormData(form);
-        fetch(action, { method: 'POST', body: data, mode: 'no-cors' })
-          .catch(() => {});
+      if (!email) {
+        showToast('Veuillez entrer une adresse email valide.', 'error');
+        return;
       }
 
-      // Feedback UX immédiat
-      form.querySelector('input[type="email"]').value = '';
-      showToast();
+      try {
+        const response = await fetch(BREVO_API_URL, {
+          method: 'POST',
+          headers: {
+            "api-key": "REMOVED",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: email,
+            listIds: [BREVO_LIST_ID],
+            updateEnabled: true
+          })
+        });
+
+        if (response.ok || response.status === 400) {
+          // 200: created, 400: already exists (which is fine)
+          emailInput.value = '';
+          showToast('', 'success');
+        } else {
+          showToast('Erreur lors de l\'inscription. Réessaye.', 'error');
+        }
+      } catch (error) {
+        console.error('Brevo API error:', error);
+        showToast('Erreur de connexion. Réessaye plus tard.', 'error');
+      }
     }
   </script>
 
