@@ -126,6 +126,14 @@
 
     .nav-logo span { color: var(--red); }
 
+    .nav-logo-img {
+      width: 32px;
+      height: auto;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
     .nav-cta {
       font-size: 12px;
       font-weight: 500;
@@ -186,6 +194,17 @@
       max-width: var(--max-w);
       margin: 0 auto;
       width: 100%;
+    }
+
+    .hero-logo {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .hero-logo img {
+      height: 72px;
+      width: auto;
+      display: inline-block;
     }
 
     /* Decorative kanji — 武士道 (Bushido) */
@@ -853,6 +872,14 @@
       font-family: var(--font-title);
       font-size: 28px;
       letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-logo img {
+      height: 40px;
+      width: auto;
     }
 
     .footer-logo span { color: var(--red); }
@@ -984,7 +1011,10 @@
        NAVIGATION
   ============================================================ -->
   <nav id="navbar">
-    <div class="nav-logo">BUSHIDO GYM<span>.</span></div>
+    <div class="nav-logo">
+      <img src="./BUSHIDOLOGO.png" alt="Bushido Gym Logo" class="nav-logo-img" />
+      BUSHIDO GYM<span>.</span>
+    </div>
     <a href="#cta" class="nav-cta">Rejoindre la liste</a>
   </nav>
 
@@ -995,6 +1025,10 @@
     <div class="hero-kanji" aria-hidden="true">武士道</div>
 
     <div class="hero-inner">
+      <div class="hero-logo fade-in">
+        <img src="./BUSHIDOLOGO.png" alt="Bushido Gym Logo" />
+      </div>
+
       <div class="hero-badge fade-in">La plus grande salle du Pays de Gex</div>
 
       <h1 class="hero-title fade-in">
@@ -1298,7 +1332,10 @@
   <footer>
     <div class="footer-inner">
       <div>
-        <div class="footer-logo">BUSHIDO GYM<span>.</span></div>
+        <div class="footer-logo">
+          <img src="./BUSHIDOLOGO.png" alt="Bushido Gym Logo" />
+          BUSHIDO GYM<span>.</span>
+        </div>
         <div class="footer-meta">Bientôt à Chevry, Pays de Gex</div>
       </div>
 
